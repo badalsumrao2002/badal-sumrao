@@ -1,39 +1,42 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
+    const tabs = document.querySelectorAll('.tab-link');
+    const tabContents = document.querySelectorAll('.tab-content');
 
-    // --- FAQ Accordion Logic ---
-    const faqQuestions = document.querySelectorAll('.faq-question');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            // Deactivate all tabs and content
+            tabs.forEach(item => item.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
 
-    faqQuestions.forEach(button => {
-        button.addEventListener('click', () => {
-            const answer = button.nextElementSibling;
-
-            // Close all other answers
-            document.querySelectorAll('.faq-answer').forEach(ans => {
-                if (ans !== answer) {
-                    ans.style.display = 'none';
-                }
-            });
-
-            // Toggle the clicked answer
-            if (answer.style.display === 'block') {
-                answer.style.display = 'none';
-            } else {
-                answer.style.display = 'block';
-            }
+            // Activate the clicked tab and its content
+            const target = document.getElementById(tab.dataset.tab);
+            tab.classList.add('active');
+            target.classList.add('active');
         });
     });
 
-    // --- (Future) Booking form logic can be added here ---
-    const paymentSelect = document.getElementById('payment-method-select');
-    const qrCodeContainer = document.getElementById('qr-code-container');
+    // Handle all booking form submissions
+    const bookingForms = document.querySelectorAll('.booking-form');
+    bookingForms.forEach(form => {
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
 
-    if (paymentSelect && qrCodeContainer) {
-        paymentSelect.addEventListener('change', function() {
-            if (this.value === 'pay-qr') {
-                qrCodeContainer.style.display = 'block';
-            } else {
-                qrCodeContainer.style.display = 'none';
-            }
+            const formData = new FormData(this);
+            const data = new URLSearchParams(formData);
+
+            fetch('/api/booking', {
+                method: 'POST',
+                body: data
+            })
+            .then(response => response.json())
+            .then(result => {
+                alert(result.message); // Show success message
+                form.reset(); // Clear the form
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            });
         });
-    }
+    });
 });

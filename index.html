@@ -3,155 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Car Rental - Nashik Taxi Service</title>
+    <title>MansiCab - Your Trusted Travel Partner</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 
     <header>
-        <div class="logo-container">
-            <img src="images/logo-placeholder.png" alt="Home Car Rental Logo">
-            <span>Home Car Rental</span>
+        <div class="logo">
+            <img src="images/logo.jpg" alt="MansiCab Logo">
+            <span>MansiCab</span>
         </div>
         <nav>
             <a href="#">Home</a>
-            <a href="#">Routes</a>
+            <a href="#">About Us</a>
             <a href="#">Services</a>
             <a href="#">Contact</a>
         </nav>
-        <div class="header-contact">
-            <a href="tel:+919503257249">+91 9503257249</a>
+        <div class="header-auth">
+            <a href="login.html" class="login-btn">Login</a>
+            <a href="register.html" class="login-btn" style="background-color: #337ab7;">Register</a>
         </div>
     </header>
 
     <main>
         <section class="hero-section">
-            <div class="booking-form-container">
-                <h2>Book a Cab</h2>
-                <form id="booking-form" action="/api/booking" method="POST">
-                    <select name="trip-type" required>
-                        <option value="">-- Select Trip Type --</option>
-                        <option value="one-way">One Way (Pick & Drop)</option>
-                        <option value="round-trip">Round Trip</option>
-                        <option value="local-hourly">Local Trip (Hourly)</option>
-                        <option value="local-day">Local Trip (Day-based)</option>
-                        <option value="airport-drop">Airport Drop</option>
-                        <option value="airport-pickup">Airport Pick-up</option>
-                    </select>
-                    <input type="text" name="pickup" placeholder="Pickup Location" required>
-                    <input type="text" name="drop" placeholder="Drop Location" required>
-                    <input type="date" name="date" required>
-                    <input type="time" name="time" required>
-                    <select name="vehicle-type" required>
-                        <option value="">-- Select Vehicle Type --</option>
-                        <option value="sedan">Sedan</option>
-                        <option value="suv">SUV</option>
-                        <option value="tempo">Tempo</option>
-                    </select>
-                    <input type="text" name="name" placeholder="Your Name" required>
-                    <input type="tel" name="mobile" placeholder="Mobile Number" required>
-                    <input type="email" name="email" placeholder="Email Address" required>
+            <h1>Hire cab for any kind of trip</h1>
+            <div class="booking-container">
+                <div class="booking-tabs">
+                    <button class="tab-link active" data-tab="oneway">ONEWAY</button>
+                    <button class="tab-link" data-tab="roundtrip">ROUNDTRIP</button>
+                    <button class="tab-link" data-tab="local">LOCAL</button>
+                    <button class="tab-link" data-tab="airport">AIRPORT</button>
+                </div>
 
-                    <select name="payment-method" id="payment-method-select" required>
-                        <option value="">-- Select Payment Method --</option>
-                        <option value="pay-later">Pay Later</option>
-                        <option value="pay-qr">Pay Now with QR Code</option>
-                    </select>
+                <div id="oneway" class="tab-content active">
+                    <form class="booking-form" action="/api/booking" method="POST">
+                        <input type="text" name="pickup" placeholder="PICKUP LOCATION" required>
+                        <input type="text" name="drop" placeholder="DROP LOCATION" required>
+                        <input type="date" name="date" required>
+                        <input type="time" name="time" required>
+                        <button type="submit">Book Now</button>
+                    </form>
+                </div>
 
-                    <div id="qr-code-container" style="display: none; text-align: center; background: white; padding: 1rem; border-radius: 5px;">
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://example.com/pay" alt="Scan to Pay">
-                        <p style="color: #333;">Scan the QR code with your payment app.</p>
-                        <input type="text" name="transactionId" placeholder="Enter Transaction ID" style="margin-top: 1rem;">
-                    </div>
+                <div id="roundtrip" class="tab-content">
+                     <form class="booking-form" action="/api/booking" method="POST">
+                        <input type="text" name="from" placeholder="FROM" required>
+                        <input type="text" name="to" placeholder="TO" required>
+                        <input type="date" name="departureDate" placeholder="DEPARTURE" required>
+                        <input type="date" name="returnDate" placeholder="RETURN" required>
+                        <button type="submit">Book Now</button>
+                    </form>
+                </div>
 
-                    <button type="submit">Book Now</button>
-                </form>
+                <div id="local" class="tab-content">
+                    <form class="booking-form" action="/api/booking" method="POST">
+                        <input type="text" name="pickup" placeholder="PICKUP LOCATION" required>
+                        <input type="date" name="date" required>
+                        <input type="time" name="time" required>
+                        <select name="package" required><option>8 hrs 80 Kms</option></select>
+                        <button type="submit">Book Now</button>
+                    </form>
+                </div>
+
+                <div id="airport" class="tab-content">
+                    <form class="booking-form" action="/api/booking" method="POST">
+                        <input type="text" name="airport" placeholder="SELECT AIRPORT" required>
+                        <input type="text" name="location" placeholder="PICKUP/DROP LOCATION" required>
+                        <input type="date" name="date" required>
+                        <input type="time" name="time" required>
+                        <button type="submit">Book Now</button>
+                    </form>
+                </div>
             </div>
         </section>
 
-        <section class="about-us-summary">
-            <h2>About Us</h2>
-            <p>Quality outstation cab booking service in Maharashtra, covering all major cities.</p>
-            <ul>
-                <li>All Car Categories</li>
-                <li>Cabs available for round multiple day rental.</li>
-                <li>Registered Drivers and Cabs</li>
-            </ul>
+        <section id="packages" class="content-section">
+            <h2>Best Packages for Your Journey</h2>
+            <div class="placeholder"></div>
         </section>
 
-        <section class="our-fleet">
-            <h2>Our Fleet</h2>
-            <div class="fleet-grid">
-                <div class="car-card"><img src="images/placeholder.txt" alt="Sedan Car"><h3>Swift Dezire</h3><p>5 Guests</p><button>Book Now</button></div>
-                <div class="car-card"><img src="images/placeholder.txt" alt="SUV Car"><h3>Ertiga</h3><p>7 Guests</p><button>Book Now</button></div>
-                <div class="car-card"><img src="images/placeholder.txt" alt="Large SUV Car"><h3>Innova Crysta</h3><p>8 Guests</p><button>Book Now</button></div>
-            </div>
+        <section id="offers" class="content-section">
+            <h2>Top Offers</h2>
+            <div class="placeholder"></div>
         </section>
 
-        <section class="stats-section">
-            <div class="stat-item"><h3>10+</h3><p>States</p></div>
-            <div class="stat-item"><h3>3000+</h3><p>Rides</p></div>
-            <div class="stat-item"><h3>24/7</h3><p>Support</p></div>
-        </section>
-
-        <section class="faq-section">
-            <h2>Frequently Asked Questions</h2>
-            <div class="faq-item">
-                <button class="faq-question">How do I Book my first cab?</button>
-                <div class="faq-answer"><p>You can use the booking form, WhatsApp, or Call us directly.</p></div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question">How can I make the payment?</button>
-                <div class="faq-answer"><p>We accept UPI, Bank Transfer, and Debit/Credit Cards.</p></div>
-            </div>
-        </section>
-
-        <section class="review-form-section" style="padding: 3rem 2rem; background-color: var(--white);">
-            <h2 style="text-align: center;">Leave a Review</h2>
-            <form id="review-form" style="max-width: 600px; margin: auto; display: flex; flex-direction: column; gap: 1rem;">
-                <input type="text" name="name" placeholder="Your Name" required>
-                <select name="rating" required>
-                    <option value="">-- Select Rating --</option>
-                    <option value="5">★★★★★ (Excellent)</option>
-                    <option value="4">★★★★☆ (Great)</option>
-                    <option value="3">★★★☆☆ (Good)</option>
-                    <option value="2">★★☆☆☆ (Fair)</option>
-                    <option value="1">★☆☆☆☆ (Poor)</option>
-                </select>
-                <textarea name="review" rows="4" placeholder="Write your review here..." required></textarea>
-                <button type="submit" style="background-color: var(--primary-black); color: var(--accent-yellow);">Submit Review</button>
-            </form>
+        <section id="testimonials" class="content-section">
+            <h2>Our Testimonials</h2>
+            <div class="placeholder"></div>
         </section>
     </main>
 
     <footer>
-        <div class="footer-grid">
-            <div class="footer-col">
-                <h3>Nashik Routes</h3>
-                <ul>
-                    <li><a href="#">Nashik to Pune</a></li>
-                    <li><a href="#">Nashik to Mumbai</a></li>
-                    <li><a href="#">Nashik to Shirdi</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h3>Mumbai Routes</h3>
-                <ul>
-                    <li><a href="#">Mumbai to Nashik</a></li>
-                    <li><a href="#">Mumbai to Pune</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h3>Top Searches</h3>
-                <ul>
-                    <li><a href="#">Nashik Taxi</a></li>
-                    <li><a href="#">Mumbai Taxi</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="copyright">
-            <p>Copyright © Home Car Rental | Design by Jules</p>
+        <div class="footer-content">
+            <p>&copy; 2025 MansiCab Clone. All rights reserved.</p>
         </div>
     </footer>
 

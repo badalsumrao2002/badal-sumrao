@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - MansiCab</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="images/logo.jpg" alt="MansiCab Logo">
+            <span>MansiCab</span>
+        </div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/profile.html">My Profile</a>
+            <a href="/api/logout">Logout</a>
+        </nav>
+    </header>
+    <main>
+        <section style="padding: 2rem;">
+            <h1>Welcome, Customer!</h1>
+            <h2>My Bookings</h2>
+            <div id="my-bookings-container">
+                <!-- Bookings will be loaded here -->
+            </div>
+        </section>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const bookingsContainer = document.getElementById('my-bookings-container');
+            fetch('/api/my-bookings')
+                .then(res => {
+                    if (!res.ok) window.location.href = '/login.html';
+                    return res.json();
+                })
+                .then(bookings => {
+                    if (!bookings || bookings.length === 0) {
+                        bookingsContainer.innerHTML = '<p>You have no bookings.</p>';
+                        return;
+                    }
+                    let html = '<ul>';
+                    bookings.forEach(b => {
+                        html += `<li>${b.date}: ${b.pickup || b.from} to ${b.drop || b.to} - <strong>Status: ${b.status}</strong></li>`;
+                    });
+                    html += '</ul>';
+                    bookingsContainer.innerHTML = html;
+                })
+                .catch(err => {
+                    console.error(err);
+                    bookingsContainer.innerHTML = '<p>Could not load bookings.</p>';
+                });
+        });
+    </script>
+</body>
+</html>
