@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - MansiCab</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="images/logo.jpg" alt="MansiCab Logo">
+            <span>MansiCab</span>
+        </div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="#">About Us</a>
+            <a href="#">Services</a>
+            <a href="#">Contact</a>
+        </nav>
+    </header>
+    <main>
+        <section style="padding: 4rem 2rem; text-align: center;">
+            <h2>Create Your Account</h2>
+            <form id="register-form" action="/api/register" method="POST" style="max-width: 400px; margin: auto; display: flex; flex-direction: column; gap: 1rem;">
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                <input type="password" name="password" placeholder="Create Password" required>
+                <button type="submit" class="update-btn">Register</button>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 MansiCab Clone. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
