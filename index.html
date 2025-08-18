@@ -3,149 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Welcome to Home Car Rental, your trusted cab service in Nashik for spiritual, scenic, and business travel. Book safe, comfortable, and timely taxis.">
-    <meta name="keywords" content="Nashik cab service, Nashik taxi, Nashik car rental, Nashik sightseeing package, Trimbakeshwar taxi, Panchavati tour, Sula Vineyards cab, Home Car Rental Nashik, Nashik travel packages, Nashik day trips">
-    <title>Home Car Rental Nashik - Your Reliable Taxi Service</title>
+    <title>Home Car Rental - Nashik Taxi Service</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 
-    <!-- Side Navigation Menu -->
-    <div id="side-menu" class="side-nav">
-        <a href="javascript:void(0)" class="close-btn" id="close-menu-btn">&times;</a>
-        <a href="index.html">Home</a>
-        <a href="pages/about.html">About Us</a>
-        <a href="pages/services.html">Services</a>
-        <div class="nav-submenu">
-            <a href="#" class="submenu-toggle">Destinations <i class="fas fa-chevron-down"></i></a>
-            <div class="submenu-content">
-                <a href="pages/nashik.html">Nashik Details</a>
-                <a href="pages/nashik-to-mumbai.html">Mumbai</a>
-                <a href="pages/nashik-to-pune.html">Pune</a>
-                <a href="pages/nashik-to-shirdi.html">Shirdi</a>
-            </div>
-        </div>
-    </div>
-
     <header>
         <div class="logo-container">
-            <img src="images/logo-placeholder.png" alt="Home Car Rental company logo" class="logo" style="width: 50px; height: auto; vertical-align: middle;" loading="lazy">
-            <span class="brand-name">Home Car Rental</span>
-            <button id="logo-upload-btn" title="Upload your logo (UI only)">Upload Logo</button>
+            <img src="images/logo-placeholder.png" alt="Home Car Rental Logo">
+            <span>Home Car Rental</span>
         </div>
-        <div class="contact-info">
-            <span>Call Us: +91 9503257249</span>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Routes</a>
+            <a href="#">Services</a>
+            <a href="#">Contact</a>
+        </nav>
+        <div class="header-contact">
+            <a href="tel:+919503257249">+91 9503257249</a>
         </div>
     </header>
 
-
     <main>
-        <section class="booking-form-section">
-            <h2>Book Your Ride Now</h2>
-            <form id="booking-form">
-                <div class="form-tabs">
-                    <button type="button" class="tab-link active" data-tab="outstation">Outstation</button>
-                    <button type="button" class="tab-link" data-tab="local">Local</button>
-                    <button type="button" class="tab-link" data-tab="airport">Airport</button>
-                </div>
-
-                <div class="form-content-wrapper">
-                    <!-- Form content is now managed by JS to avoid duplication -->
-                </div>
-
-                <div class="common-fields">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="car-type">Car Type:</label>
-                            <select id="car-type" name="car-type">
-                                <option value="sedan">Sedan</option>
-                                <option value="suv">SUV</option>
-                                <option value="luxury">Luxury</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="contact-number">Contact Number:</label>
-                            <input type="tel" id="contact-number" name="contact-number" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="customer-name">Your Name:</label>
-                        <input type="text" id="customer-name" name="customer-name" required>
-                    </div>
-                </div>
-                <button type="submit">Confirm Booking</button>
-            </form>
-            <div id="confirmation-message" style="display:none;"></div>
-        </section>
-
-        <section class="intro-section">
-            <h1>Home Car Rental Nashik</h1>
-            <p>Welcome to Home Car Rental, your trusted cab service in Nashik. Whether you are a tourist exploring the spiritual and scenic beauty of Nashik or a traveler planning a day trip, our car rental service ensures safe, comfortable, and timely travel.</p>
-        </section>
-
-        <section class="city-grid-section">
-            <h3>Our Top Destinations</h3>
-            <div class="city-grid">
-                <a href="pages/nashik.html" class="city-thumbnail">
-                    <img src="images/placeholder.txt" alt="A scenic view of Nashik city" loading="lazy">
-                    <div class="city-name">Explore Nashik</div>
-                </a>
-                <a href="pages/nashik-to-mumbai.html" class="city-thumbnail">
-                    <img src="images/placeholder.txt" alt="The iconic Gateway of India in Mumbai" loading="lazy">
-                    <div class="city-name">Nashik to Mumbai</div>
-                </a>
-                <a href="pages/nashik-to-pune.html" class="city-thumbnail">
-                    <img src="images/placeholder.txt" alt="Shaniwar Wada fort in Pune" loading="lazy">
-                    <div class="city-name">Nashik to Pune</div>
-                </a>
-                <a href="pages/nashik-to-shirdi.html" class="city-thumbnail">
-                    <img src="images/placeholder.txt" alt="The holy Sai Baba temple in Shirdi" loading="lazy">
-                    <div class="city-name">Nashik to Shirdi</div>
-                </a>
+        <section class="hero-section">
+            <div class="booking-form-container">
+                <h2>Book a Cab</h2>
+                <form id="booking-form">
+                    <select name="trip-type">
+                        <option value="one-way">One Way</option>
+                        <option value="round-trip">Round Trip</option>
+                    </select>
+                    <input type="text" name="pickup" placeholder="Pickup Location">
+                    <input type="text" name="drop" placeholder="Drop Location">
+                    <input type="date" name="date">
+                    <input type="time" name="time">
+                    <button type="submit">Send Message</button>
+                </form>
             </div>
         </section>
 
-        <section class="testimonials-section">
-            <h2>What Our Customers Say</h2>
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <p>"Excellent service! The car was clean and the driver was very professional. Made our family trip to Shirdi very comfortable."</p>
-                    <cite>– Priya S.</cite>
-                </div>
-                <div class="testimonial-card">
-                    <p>"On-time pickup for my airport transfer to Mumbai. The driver was courteous and helped with the luggage. Highly recommended."</p>
-                    <cite>– Rohan M.</cite>
-                </div>
-                <div class="testimonial-card">
-                    <p>"We booked a local sightseeing package and it was fantastic. The driver knew all the best spots. Great value for money."</p>
-                    <cite>– Anjali D.</cite>
-                </div>
+        <section class="about-us-summary">
+            <h2>About Us</h2>
+            <p>Quality outstation cab booking service in Maharashtra, covering all major cities.</p>
+            <ul>
+                <li>All Car Categories</li>
+                <li>Cabs available for round multiple day rental.</li>
+                <li>Registered Drivers and Cabs</li>
+            </ul>
+        </section>
+
+        <section class="our-fleet">
+            <h2>Our Fleet</h2>
+            <div class="fleet-grid">
+                <div class="car-card"><img src="images/placeholder.txt" alt="Sedan Car"><h3>Swift Dezire</h3><p>5 Guests</p><button>Book Now</button></div>
+                <div class="car-card"><img src="images/placeholder.txt" alt="SUV Car"><h3>Ertiga</h3><p>7 Guests</p><button>Book Now</button></div>
+                <div class="car-card"><img src="images/placeholder.txt" alt="Large SUV Car"><h3>Innova Crysta</h3><p>8 Guests</p><button>Book Now</button></div>
+            </div>
+        </section>
+
+        <section class="stats-section">
+            <div class="stat-item"><h3>10+</h3><p>States</p></div>
+            <div class="stat-item"><h3>3000+</h3><p>Rides</p></div>
+            <div class="stat-item"><h3>24/7</h3><p>Support</p></div>
+        </section>
+
+        <section class="faq-section">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-item">
+                <button class="faq-question">How do I Book my first cab?</button>
+                <div class="faq-answer"><p>You can use the booking form, WhatsApp, or Call us directly.</p></div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">How can I make the payment?</button>
+                <div class="faq-answer"><p>We accept UPI, Bank Transfer, and Debit/Credit Cards.</p></div>
             </div>
         </section>
     </main>
 
     <footer>
-        <div class="social-media">
-            <a href="#" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-            <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
-            <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>Nashik Routes</h3>
+                <ul>
+                    <li><a href="#">Nashik to Pune</a></li>
+                    <li><a href="#">Nashik to Mumbai</a></li>
+                    <li><a href="#">Nashik to Shirdi</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Mumbai Routes</h3>
+                <ul>
+                    <li><a href="#">Mumbai to Nashik</a></li>
+                    <li><a href="#">Mumbai to Pune</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Top Searches</h3>
+                <ul>
+                    <li><a href="#">Nashik Taxi</a></li>
+                    <li><a href="#">Mumbai Taxi</a></li>
+                </ul>
+            </div>
         </div>
-        <div class="footer-links">
-            <a href="pages/privacy-policy.html">Privacy Policy</a> |
-            <a href="pages/terms.html">Terms & Conditions</a>
+        <div class="copyright">
+            <p>Copyright © Home Car Rental | Design by Jules</p>
         </div>
-        <p>&copy; 2025 Home Car Rental. All rights reserved.</p>
     </footer>
-
-    <!-- Floating Action Buttons -->
-    <div class="fab-container-left">
-        <a href="tel:+919503257249" class="fab fab-call" title="Call Us"><i class="fas fa-phone"></i></a>
-    </div>
-    <div class="fab-container-right">
-        <a href="https://wa.me/919503257249" class="fab fab-whatsapp" title="WhatsApp Us" target="_blank"><i class="fab fa-whatsapp"></i></a>
-        <button id="open-menu-btn" class="fab fab-menu" title="Open Menu"><i class="fas fa-bars"></i></button>
-    </div>
 
     <script src="js/script.js"></script>
 </body>
