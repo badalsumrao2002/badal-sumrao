@@ -152,6 +152,50 @@ h2 { font-weight: 600; }
 .fab-whatsapp { background-color: #25D366; }
 .fab-call { background-color: #343a40; }
 
+/* City Grid Styles */
+.city-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+}
+
+.city-thumbnail {
+    position: relative;
+    text-decoration: none;
+    color: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.city-thumbnail:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.city-thumbnail img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.7);
+    transition: filter 0.3s ease;
+}
+
+.city-thumbnail:hover img {
+    filter: brightness(1);
+}
+
+.city-name {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    font-size: 1.3rem;
+    font-weight: 600;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+}
+
 /* Footer Styles */
 footer {
     text-align: center;
@@ -163,9 +207,58 @@ footer {
 .social-media a {
     color: #f8f9fa;
     text-decoration: none;
-    margin: 0 10px;
-    font-size: 1.5rem; /* For icon fonts, or larger text */
+    margin: 0 15px;
+    font-size: 1.8rem;
+    transition: color 0.3s;
 }
+
+.social-media a:hover {
+    color: #0d6efd; /* A bootstrap primary blue for hover */
+}
+
+.footer-links {
+    margin-bottom: 1rem;
+}
+
+.footer-links a {
+    color: #adb5bd;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 0.9rem;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+/* Autocomplete Styles */
+.autocomplete-container {
+    position: relative;
+}
+
+.autocomplete-suggestions {
+    position: absolute;
+    border: 1px solid #ced4da;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    z-index: 99;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.suggestion-item {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.suggestion-item:hover {
+    background-color: #e9ecef;
+}
+
 
 /* Responsive Design */
 @media (max-width: 768px) {

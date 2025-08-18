@@ -1,46 +1,105 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // --- Autocomplete Logic ---
+    const cities = [
+        // Maharashtra
+        "Mumbai", "Pune", "Nagpur", "Nashik", "Aurangabad", "Solapur", "Amravati", "Kolhapur", "Thane", "Shirdi",
+        // Major Indian Cities
+        "Delhi", "Bangalore", "Hyderabad", "Ahmedabad", "Chennai", "Kolkata", "Surat", "Jaipur", "Lucknow"
+    ];
+
+    const pickupInput = document.getElementById('pickup');
+    const dropInput = document.getElementById('drop');
+    const pickupSuggestions = document.getElementById('pickup-suggestions');
+    const dropSuggestions = document.getElementById('drop-suggestions');
+
+    function showSuggestions(input, suggestionsContainer) {
+        const value = input.value.toLowerCase();
+        suggestionsContainer.innerHTML = '';
+        if (!value) {
+            suggestionsContainer.style.display = 'none';
+            return;
+        }
+
+        const filteredCities = cities.filter(city => city.toLowerCase().startsWith(value));
+
+        filteredCities.forEach(city => {
+            const suggestionItem = document.createElement('div');
+            suggestionItem.classList.add('suggestion-item');
+            suggestionItem.textContent = city;
+            suggestionItem.addEventListener('click', () => {
+                input.value = city;
+                suggestionsContainer.innerHTML = '';
+                suggestionsContainer.style.display = 'none';
+            });
+            suggestionsContainer.appendChild(suggestionItem);
+        });
+        suggestionsContainer.style.display = filteredCities.length > 0 ? 'block' : 'none';
+    }
+
+    pickupInput.addEventListener('input', () => showSuggestions(pickupInput, pickupSuggestions));
+    dropInput.addEventListener('input', () => showSuggestions(dropInput, dropSuggestions));
+
+    // Hide suggestions when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.autocomplete-container')) {
+            pickupSuggestions.style.display = 'none';
+            dropSuggestions.style.display = 'none';
+        }
+    });
+
+
+    // --- Form Submission Logic ---
     const bookingForm = document.getElementById('booking-form');
-    const confirmationMessageDiv = document.getElementById('confirmation-message');
 
     if (bookingForm) {
         bookingForm.addEventListener('submit', function(event) {
-            // Prevent the default form submission (page reload)
+            // Prevent the default form submission
             event.preventDefault();
 
-            // Get values from the form
+            // Get form values
             const pickup = document.getElementById('pickup').value;
             const drop = document.getElementById('drop').value;
-            const pickupDate = document.getElementById('pickup-date').value;
+            const pickupDate = new Date(document.getElementById('pickup-date').value).toLocaleString();
+            const returnDate = document.getElementById('return-date').value ? new Date(document.getElementById('return-date').value).toLocaleString() : "Not specified";
             const carType = document.getElementById('car-type').value;
             const customerName = document.getElementById('customer-name').value;
             const contactNumber = document.getElementById('contact-number').value;
+            const instructions = document.getElementById('special-instructions').value || "None";
 
-            // Basic validation to ensure required fields are filled
-            if (!pickup || !drop || !pickupDate || !customerName || !contactNumber) {
+            // Basic validation
+            if (!pickup || !drop || !document.getElementById('pickup-date').value || !customerName || !contactNumber) {
                 alert('Please fill out all required fields.');
                 return;
             }
 
-            // Create a summary of the booking
-            const summary = `
-                <h3>Booking Confirmation</h3>
-                <p>Thank you, <strong>${customerName}</strong>! Your booking request has been received.</p>
-                <ul>
-                    <li><strong>From:</strong> ${pickup}</li>
-                    <li><strong>To:</strong> ${drop}</li>
-                    <li><strong>Pickup Time:</strong> ${new Date(pickupDate).toLocaleString()}</li>
-                    <li><strong>Car Type:</strong> ${carType}</li>
-                    <li><strong>Contact:</strong> ${contactNumber}</li>
-                </ul>
-                <p>We will call you shortly to confirm the details.</p>
+            // Construct the WhatsApp message
+            const message = `
+*New Cab Booking Request*
+
+*Customer Name:* ${customerName}
+*Contact Number:* ${contactNumber}
+
+*Pickup Location:* ${pickup}
+*Drop Location:* ${drop}
+*Pickup Date & Time:* ${pickupDate}
+*Return Date & Time:* ${returnDate}
+
+*Car Type:* ${carType}
+*Special Instructions:* ${instructions}
             `;
 
-            // Display the confirmation message
-            confirmationMessageDiv.innerHTML = summary;
-            confirmationMessageDiv.style.display = 'block';
+            // URL-encode the message
+            const encodedMessage = encodeURIComponent(message.trim());
+            const whatsappURL = `https://wa.me/919503257249?text=${encodedMessage}`;
 
-            // Hide the form
-            bookingForm.style.display = 'none';
+            // Open WhatsApp in a new tab
+            window.open(whatsappURL, '_blank');
+
+            // Optional: Show a confirmation on the page as well
+            const confirmationMessageDiv = document.getElementById('confirmation-message');
+            confirmationMessageDiv.innerHTML = "<h4>Thank you!</h4><p>Your booking details are being sent via WhatsApp. Please press 'Send' in the new tab.</p>";
+            confirmationMessageDiv.style.display = 'block';
+            bookingForm.reset(); // Clear the form
         });
     }
 });
