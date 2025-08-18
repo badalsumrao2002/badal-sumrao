@@ -1,162 +1,183 @@
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
 /* General Body Styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
-    color: #333;
+    background-color: #f8f9fa;
+    color: #343a40;
     line-height: 1.6;
 }
 
 /* Header Styles */
 header {
-    background-color: #fff;
+    background-color: #ffffff;
     padding: 1rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #ddd;
-}
-
-.logo-container {
-    display: flex;
-    align-items: center;
+    border-bottom: 1px solid #dee2e6;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
 .brand-name {
     font-size: 1.5rem;
-    font-weight: bold;
+    font-weight: 600;
     margin-left: 10px;
 }
 
-.contact-info {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #007bff;
+#logo-upload-btn {
+    margin-left: 15px;
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
 }
 
 /* Navigation Styles */
 nav {
-    background-color: #333;
+    background-color: #343a40;
     padding: 0.5rem 2rem;
 }
-
-nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-}
-
+nav ul { list-style: none; margin: 0; padding: 0; display: flex; }
 nav ul li a {
     color: #fff;
     text-decoration: none;
-    padding: 1rem 1.5rem;
+    padding: 0.75rem 1.25rem;
     display: block;
     transition: background-color 0.3s;
 }
-
-nav ul li a:hover {
-    background-color: #555;
-}
+nav ul li a:hover { background-color: #495057; }
 
 /* Main Content Styles */
-main {
-    padding: 2rem;
-    max-width: 1200px;
-    margin: auto;
-}
-
+main { padding: 2rem; max-width: 1100px; margin: auto; }
 section {
-    background-color: #fff;
+    background-color: #ffffff;
     padding: 2rem;
     margin-bottom: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.08);
 }
+h2 { font-weight: 600; }
 
-h2, h3 {
-    color: #333;
-    margin-top: 0;
+/* Enhanced Form Styles */
+.booking-form-section {
+    max-width: 800px;
+    margin: auto;
+    margin-bottom: 2rem;
 }
-
-/* Form Styles */
-#booking-form .form-group {
+.form-row {
+    display: flex;
+    gap: 1.5rem;
     margin-bottom: 1rem;
 }
-
+.form-group {
+    flex: 1;
+}
 #booking-form label {
     display: block;
     margin-bottom: 0.5rem;
-    font-weight: bold;
+    font-weight: 500;
+    font-size: 0.9rem;
 }
-
 #booking-form input,
-#booking-form select {
-    width: calc(100% - 1.6rem);
-    padding: 0.8rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+#booking-form select,
+#booking-form textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.075);
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
-
+#booking-form input:focus,
+#booking-form select:focus,
+#booking-form textarea:focus {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
 #booking-form button {
-    background-color: #28a745;
+    background: linear-gradient(90deg, #28a745, #218838);
     color: #fff;
-    padding: 0.8rem 1.5rem;
+    padding: 0.8rem 2rem;
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: transform 0.2s;
+    width: 100%;
+    margin-top: 1rem;
 }
+#booking-form button:hover { transform: translateY(-2px); }
 
-#booking-form button:hover {
-    background-color: #218838;
-}
-
-/* City Grid Styles */
-.city-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 1rem;
-}
-
-.city-button {
-    background-color: #007bff;
-    color: #fff;
-    text-align: center;
+/* Confirmation Message */
+#confirmation-message {
+    margin-top: 1.5rem;
     padding: 1rem;
-    text-decoration: none;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-}
-
-.city-button:hover {
-    background-color: #0056b3;
-}
-
-/* Posters Section */
-.posters {
-    display: flex;
-    justify-content: space-around;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-}
-
-.poster {
+    background-color: #e6ffed;
+    border: 1px solid #b7e4c7;
+    border-radius: 8px;
     text-align: center;
-    padding: 1.5rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    flex: 1;
-    min-width: 250px;
 }
+
+/* Floating Action Buttons */
+.fab-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.fab {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: #007bff;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    font-size: 1.2rem;
+    transition: background-color 0.3s, transform 0.2s;
+}
+.fab:hover { transform: scale(1.1); }
+.fab-whatsapp { background-color: #25D366; }
+.fab-call { background-color: #343a40; }
 
 /* Footer Styles */
 footer {
     text-align: center;
-    padding: 1.5rem;
-    background-color: #333;
-    color: #fff;
-    margin-top: 2rem;
+    padding: 2rem;
+    background-color: #343a40;
+    color: #f8f9fa;
+}
+.social-media { margin-bottom: 1rem; }
+.social-media a {
+    color: #f8f9fa;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 1.5rem; /* For icon fonts, or larger text */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .form-row {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    header {
+        flex-direction: column;
+        gap: 10px;
+    }
+    nav ul {
+        justify-content: center;
+    }
 }

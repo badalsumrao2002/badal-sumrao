@@ -10,9 +10,9 @@
 
     <header>
         <div class="logo-container">
-            <!-- Placeholder for logo image -->
             <img src="images/logo-placeholder.png" alt="Home Car Rental Logo" class="logo" style="width: 50px; height: auto; vertical-align: middle;">
             <span class="brand-name">Home Car Rental</span>
+            <button id="logo-upload-btn" title="Upload your logo (UI only)">Upload Logo</button>
         </div>
         <div class="contact-info">
             <span>Call Us: +91 12345 67890</span>
@@ -24,71 +24,89 @@
             <li><a href="index.html">Home</a></li>
             <li><a href="pages/about.html">About Us</a></li>
             <li><a href="pages/services.html">Services</a></li>
-            <!-- Links to other pages will be added here -->
         </ul>
     </nav>
 
     <main>
         <section class="booking-form-section">
             <h2>Book Your Ride Now</h2>
-            <!-- This is a simplified placeholder for the booking form -->
             <form id="booking-form">
-                <div class="form-group">
-                    <label for="pickup">Pickup Location:</label>
-                    <input type="text" id="pickup" name="pickup" placeholder="e.g., Nashik">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="pickup">Pickup Location:</label>
+                        <input type="text" id="pickup" name="pickup" placeholder="e.g., Nashik" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="drop">Drop Location:</label>
+                        <input type="text" id="drop" name="drop" placeholder="e.g., Mumbai" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="pickup-date">Pickup Date & Time:</label>
+                        <input type="datetime-local" id="pickup-date" name="pickup-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="return-date">Return Date & Time (Optional):</label>
+                        <input type="datetime-local" id="return-date" name="return-date">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="car-type">Car Type:</label>
+                        <select id="car-type" name="car-type">
+                            <option value="sedan">Sedan</option>
+                            <option value="suv">SUV</option>
+                            <option value="luxury">Luxury</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                     <div class="form-group">
+                        <label for="customer-name">Your Name:</label>
+                        <input type="text" id="customer-name" name="customer-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-number">Contact Number:</label>
+                        <input type="tel" id="contact-number" name="contact-number" required>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <label for="drop">Drop Location:</label>
-                    <input type="text" id="drop" name="drop" placeholder="e.g., Mumbai">
+                    <label for="special-instructions">Special Instructions (Optional):</label>
+                    <textarea id="special-instructions" name="special-instructions" rows="3"></textarea>
                 </div>
-                <div class="form-group">
-                    <label for="date">Date:</label>
-                    <input type="date" id="date" name="date">
-                </div>
-                <button type="submit">Search Cabs</button>
+                <button type="submit">Confirm Booking</button>
             </form>
+            <div id="confirmation-message" style="display:none;"></div>
         </section>
 
         <section class="city-buttons-section">
             <h3>Our Top Destinations</h3>
-            <!-- Placeholders for city buttons. These will link to the content pages. -->
             <div class="city-grid">
                 <a href="pages/nashik-to-mumbai.html" class="city-button">Nashik to Mumbai</a>
                 <a href="pages/nashik-to-pune.html" class="city-button">Nashik to Pune</a>
                 <a href="pages/nashik-to-shirdi.html" class="city-button">Nashik to Shirdi</a>
-                <a href="pages/nashik-to-aurangabad.html" class="city-button">Nashik to Aurangabad</a>
-                <a href="pages/trimbakeshwar-temple.html" class="city-button">Trimbakeshwar Temple</a>
-                <a href="pages/panchvati.html" class="city-button">Panchvati, Nashik</a>
-                <a href="pages/bhandardara.html" class="city-button">Bhandardara</a>
-            </div>
-        </section>
-
-        <section class="service-posters-section">
-            <h3>Why Choose Us?</h3>
-            <!-- Placeholders for poster-style content -->
-            <div class="posters">
-                <div class="poster">
-                    <h4>On-Time Service</h4>
-                    <p>We guarantee timely pickup and drop-off for all our customers.</p>
-                </div>
-                <div class="poster">
-                    <h4>Clean & Safe Cabs</h4>
-                    <p>Our vehicles are well-maintained and sanitized for your safety.</p>
-                </div>
-                <div class="poster">
-                    <h4>Professional Drivers</h4>
-                    <p>Courteous and experienced drivers to make your journey comfortable.</p>
-                </div>
             </div>
         </section>
 
     </main>
 
     <footer>
+        <div class="social-media">
+            <!-- Placeholders for social media icons -->
+            <a href="#" title="WhatsApp">WhatsApp</a>
+            <a href="#" title="Instagram">Instagram</a>
+            <a href="#" title="Facebook">Facebook</a>
+        </div>
         <p>&copy; 2025 Home Car Rental. All rights reserved.</p>
     </footer>
 
-    <!-- Link to JavaScript file, though it will be empty for now -->
+    <!-- Floating Action Buttons -->
+    <div class="fab-container">
+        <a href="https://wa.me/911234567890" class="fab fab-whatsapp" target="_blank">WhatsApp</a>
+        <a href="tel:+911234567890" class="fab fab-call">Call Us</a>
+    </div>
+
     <script src="js/script.js"></script>
 </body>
 </html>
