@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Car Rental - Your Reliable Taxi Service</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 
@@ -32,13 +33,15 @@
             <h2>Book Your Ride Now</h2>
             <form id="booking-form">
                 <div class="form-row">
-                    <div class="form-group">
+                    <div class="form-group autocomplete-container">
                         <label for="pickup">Pickup Location:</label>
-                        <input type="text" id="pickup" name="pickup" placeholder="e.g., Nashik" required>
+                        <input type="text" id="pickup" name="pickup" placeholder="e.g., Nashik" required autocomplete="off">
+                        <div class="autocomplete-suggestions" id="pickup-suggestions"></div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group autocomplete-container">
                         <label for="drop">Drop Location:</label>
-                        <input type="text" id="drop" name="drop" placeholder="e.g., Mumbai" required>
+                        <input type="text" id="drop" name="drop" placeholder="e.g., Mumbai" required autocomplete="off">
+                        <div class="autocomplete-suggestions" id="drop-suggestions"></div>
                     </div>
                 </div>
                 <div class="form-row">
@@ -80,12 +83,25 @@
             <div id="confirmation-message" style="display:none;"></div>
         </section>
 
-        <section class="city-buttons-section">
+        <section class="city-grid-section">
             <h3>Our Top Destinations</h3>
             <div class="city-grid">
-                <a href="pages/nashik-to-mumbai.html" class="city-button">Nashik to Mumbai</a>
-                <a href="pages/nashik-to-pune.html" class="city-button">Nashik to Pune</a>
-                <a href="pages/nashik-to-shirdi.html" class="city-button">Nashik to Shirdi</a>
+                <a href="pages/nashik-to-mumbai.html" class="city-thumbnail">
+                    <img src="images/placeholder.txt" alt="Nashik to Mumbai">
+                    <div class="city-name">Nashik to Mumbai</div>
+                </a>
+                <a href="pages/nashik-to-pune.html" class="city-thumbnail">
+                    <img src="images/placeholder.txt" alt="Nashik to Pune">
+                    <div class="city-name">Nashik to Pune</div>
+                </a>
+                <a href="pages/nashik-to-shirdi.html" class="city-thumbnail">
+                    <img src="images/placeholder.txt" alt="Nashik to Shirdi">
+                    <div class="city-name">Nashik to Shirdi</div>
+                </a>
+                <a href="pages/nashik-to-aurangabad.html" class="city-thumbnail">
+                    <img src="images/placeholder.txt" alt="Nashik to Aurangabad">
+                    <div class="city-name">Nashik to Aurangabad</div>
+                </a>
             </div>
         </section>
 
@@ -93,10 +109,13 @@
 
     <footer>
         <div class="social-media">
-            <!-- Placeholders for social media icons -->
-            <a href="#" title="WhatsApp">WhatsApp</a>
-            <a href="#" title="Instagram">Instagram</a>
-            <a href="#" title="Facebook">Facebook</a>
+            <a href="#" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+        </div>
+        <div class="footer-links">
+            <a href="pages/privacy-policy.html">Privacy Policy</a> |
+            <a href="pages/terms.html">Terms & Conditions</a>
         </div>
         <p>&copy; 2025 Home Car Rental. All rights reserved.</p>
     </footer>
