@@ -1,0 +1,7 @@
+# Allow all user agents
+User-agent: *
+Allow: /
+
+# Disallow crawling of admin and vendor panels
+Disallow: /admin/
+Disallow: /vendor/

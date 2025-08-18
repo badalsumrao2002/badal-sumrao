@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Vendors - Admin</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <span>Home Car Rental - Admin Panel</span>
+        </div>
+        <nav>
+            <a href="/admin/dashboard.html">Bookings</a>
+            <a href="/admin/pages.html">Pages</a>
+            <a href="/admin/reviews.html">Reviews</a>
+            <a href="/admin/vendors.html">Vendors</a>
+            <a href="/api/admin/logout">Logout</a>
+        </nav>
+    </header>
+    <main>
+        <section style="padding: 2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h1>Manage Vendors</h1>
+                <a href="/admin/add-vendor.html" class="update-btn" style="text-decoration: none;">Add New Vendor</a>
+            </div>
+            <div id="vendors-container">
+                <!-- Vendor list will be loaded here -->
+            </div>
+        </section>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const vendorsContainer = document.getElementById('vendors-container');
+
+            function renderVendors(vendors) {
+                // ... implementation to render table of vendors ...
+                // ... with Edit and Delete buttons ...
+            }
+
+            fetch('/api/admin/vendors').then(res => res.json()).then(vendors => {
+                 if (vendors.length === 0) {
+                    vendorsContainer.innerHTML = '<p>No vendors found.</p>';
+                    return;
+                }
+                const table = document.createElement('table');
+                table.className = 'bookings-table';
+                const thead = document.createElement('thead');
+                thead.innerHTML = `<tr><th>ID</th><th>Name</th><th>Email</th><th>Actions</th></tr>`;
+                table.appendChild(thead);
+                const tbody = document.createElement('tbody');
+                vendors.forEach(vendor => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${vendor.id}</td>
+                        <td>${vendor.name}</td>
+                        <td>${vendor.email}</td>
+                        <td>
+                            <a href="/admin/edit-vendor.html?id=${vendor.id}" class="update-btn">Edit</a>
+                            <button class="delete-btn" data-id="${vendor.id}">Delete</button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+                table.appendChild(tbody);
+                vendorsContainer.innerHTML = '';
+                vendorsContainer.appendChild(table);
+            });
+
+            vendorsContainer.addEventListener('click', e => {
+                if (e.target.classList.contains('delete-btn')) {
+                    const id = e.target.dataset.id;
+                    if (confirm('Are you sure you want to delete this vendor?')) {
+                        fetch(`/api/admin/vendors/${id}`, { method: 'DELETE' })
+                            .then(res => {
+                                if (res.ok) e.target.closest('tr').remove();
+                                else alert('Failed to delete vendor.');
+                            });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

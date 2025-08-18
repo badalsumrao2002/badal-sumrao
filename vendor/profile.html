@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Vendor</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <span>Home Car Rental - Vendor Panel</span>
+        </div>
+        <nav>
+            <a href="/vendor/dashboard.html">My Bookings</a>
+            <a href="/vendor/profile.html">My Profile</a>
+            <a href="/api/logout">Logout</a>
+        </nav>
+    </header>
+    <main>
+        <section style="padding: 2rem;">
+            <h1>My Profile</h1>
+            <form id="profile-form" style="max-width: 600px; margin: auto;">
+                <h3>Personal Details</h3>
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                <input type="password" name="password" placeholder="New Password (leave blank to keep current)">
+                <hr style="margin: 1rem 0;">
+                <h3>Vehicle Details</h3>
+                <input type="text" name="vehicleMake" placeholder="Car Make (e.g., Toyota)">
+                <input type="text" name="vehicleModel" placeholder="Car Model (e.g., Camry)">
+                <input type="text" name="licensePlate" placeholder="License Plate">
+                <button type="submit" class="update-btn">Update Profile</button>
+            </form>
+        </section>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('profile-form');
+
+            // Fetch current profile data
+            fetch('/api/vendor/profile')
+                .then(res => res.json())
+                .then(vendor => {
+                    form.name.value = vendor.name || '';
+                    form.email.value = vendor.email || '';
+                    form.vehicleMake.value = vendor.vehicle?.make || '';
+                    form.vehicleModel.value = vendor.vehicle?.model || '';
+                    form.licensePlate.value = vendor.vehicle?.licensePlate || '';
+                });
+
+            // Handle form submission
+            form.addEventListener('submit', e => {
+                e.preventDefault();
+                const data = {
+                    name: form.name.value,
+                    email: form.email.value,
+                    vehicle: {
+                        make: form.vehicleMake.value,
+                        model: form.vehicleModel.value,
+                        licensePlate: form.licensePlate.value,
+                    }
+                };
+                if (form.password.value) {
+                    data.password = form.password.value;
+                }
+                fetch('/api/vendor/profile', {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                }).then(res => {
+                    if (res.ok) {
+                        alert('Profile updated successfully!');
+                    } else {
+                        alert('Failed to update profile.');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

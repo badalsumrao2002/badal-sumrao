@@ -24,5 +24,16 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // --- (Future) Booking form logic can be added here ---
+    const paymentSelect = document.getElementById('payment-method-select');
+    const qrCodeContainer = document.getElementById('qr-code-container');
 
+    if (paymentSelect && qrCodeContainer) {
+        paymentSelect.addEventListener('change', function() {
+            if (this.value === 'pay-qr') {
+                qrCodeContainer.style.display = 'block';
+            } else {
+                qrCodeContainer.style.display = 'none';
+            }
+        });
+    }
 });
