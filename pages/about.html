@@ -9,6 +9,24 @@
 </head>
 <body>
 
+    <!-- Side Navigation Menu -->
+    <div id="side-menu" class="side-nav">
+        <a href="javascript:void(0)" class="close-btn" id="close-menu-btn">&times;</a>
+        <a href="../index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="services.html">Services</a>
+        <div class="nav-submenu">
+            <a href="#" class="submenu-toggle">Destinations <i class="fas fa-chevron-down"></i></a>
+            <div class="submenu-content">
+                <a href="nashik.html">Nashik Details</a>
+                <a href="nashik-to-mumbai.html">Mumbai</a>
+                <a href="nashik-to-pune.html">Pune</a>
+                <a href="nashik-to-shirdi.html">Shirdi</a>
+                <!-- Add all other destinations here -->
+            </div>
+        </div>
+    </div>
+
     <header>
         <div class="logo-container">
             <img src="../images/logo-placeholder.png" alt="Home Car Rental Logo" class="logo" style="width: 50px; height: auto; vertical-align: middle;">
@@ -46,6 +64,89 @@
                 <li><strong>24/7 Support:</strong> Our team is available around the clock to assist you with your bookings and queries.</li>
             </ul>
         </section>
+
+        <section class="booking-form-section">
+            <h2>Book Your Ride Now</h2>
+            <form id="booking-form">
+                <div class="form-tabs">
+                    <button type="button" class="tab-link active" data-tab="outstation">Outstation</button>
+                    <button type="button" class="tab-link" data-tab="local">Local</button>
+                    <button type="button" class="tab-link" data-tab="airport">Airport</button>
+                </div>
+
+                <div class="form-content-wrapper">
+                    <!-- Outstation Tab -->
+                    <div id="outstation" class="tab-content active">
+                        <div class="form-row">
+                            <div class="form-group autocomplete-container">
+                                <label for="pickup">Pickup Location:</label>
+                                <input type="text" id="pickup" name="pickup" placeholder="e.g., Nashik" required autocomplete="off">
+                                <div class="autocomplete-suggestions" id="pickup-suggestions"></div>
+                            </div>
+                            <div class="form-group autocomplete-container">
+                                <label for="drop">Drop Location:</label>
+                                <input type="text" id="drop" name="drop" placeholder="e.g., Mumbai" required autocomplete="off">
+                                <div class="autocomplete-suggestions" id="drop-suggestions"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="pickup-date">Pickup Date & Time:</label>
+                            <input type="datetime-local" id="pickup-date" name="pickup-date" required>
+                        </div>
+                    </div>
+                    <!-- Local Tab -->
+                    <div id="local" class="tab-content">
+                        <div class="form-group">
+                            <label for="local-pickup">Pickup Location:</label>
+                            <input type="text" id="local-pickup" name="local-pickup" placeholder="e.g., Nashik City" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="local-package">Package:</label>
+                            <select id="local-package" name="local-package">
+                                <option value="4hr40km">4 Hours, 40 Kms</option>
+                                <option value="8hr80km">8 Hours, 80 Kms</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Airport Tab -->
+                    <div id="airport" class="tab-content">
+                         <div class="form-group">
+                            <label for="airport-trip-type">Trip Type:</label>
+                            <select id="airport-trip-type" name="airport-trip-type">
+                                <option value="pickup">Airport Pickup</option>
+                                <option value="drop">Airport Drop</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="airport-location">Airport:</label>
+                            <input type="text" id="airport-location" name="airport-location" placeholder="e.g., Mumbai Airport" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Common fields for all tabs -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="car-type">Car Type:</label>
+                        <select id="car-type" name="car-type">
+                            <option value="sedan">Sedan</option>
+                            <option value="suv">SUV</option>
+                            <option value="luxury">Luxury</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-number">Contact Number:</label>
+                        <input type="tel" id="contact-number" name="contact-number" required>
+                    </div>
+                </div>
+                 <div class="form-group">
+                    <label for="customer-name">Your Name:</label>
+                    <input type="text" id="customer-name" name="customer-name" required>
+                </div>
+                <button type="submit">Confirm Booking</button>
+            </form>
+            <div id="confirmation-message" style="display:none;"></div>
+        </section>
     </main>
 
     <footer>
@@ -60,6 +161,13 @@
         </div>
         <p>&copy; 2025 Home Car Rental. All rights reserved.</p>
     </footer>
+
+    <!-- Floating Action Buttons -->
+    <div class="fab-container">
+        <button id="open-menu-btn" class="fab fab-menu"><i class="fas fa-bars"></i></button>
+        <a href="https://wa.me/919503257249" class="fab fab-whatsapp" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        <a href="tel:+919503257249" class="fab fab-call"><i class="fas fa-phone"></i></a>
+    </div>
 
     <script src="../js/script.js"></script>
 </body>
