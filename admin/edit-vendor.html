@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Vendor - Admin</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <span>Home Car Rental - Admin Panel</span>
+        </div>
+        <nav>
+            <a href="/admin/dashboard.html">Bookings</a>
+            <a href="/admin/pages.html">Pages</a>
+            <a href="/admin/reviews.html">Reviews</a>
+            <a href="/admin/vendors.html">Vendors</a>
+            <a href="/api/admin/logout">Logout</a>
+        </nav>
+    </header>
+    <main>
+        <section style="padding: 2rem;">
+            <h1>Edit Vendor</h1>
+            <form id="edit-vendor-form" style="max-width: 600px; margin: auto;">
+                <input type="hidden" id="vendorId">
+                <div style="margin-bottom: 1rem;">
+                    <label for="name">Vendor Name</label>
+                    <input type="text" id="name" name="name" required style="width: 100%; padding: 8px;">
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <label for="email">Vendor Email</label>
+                    <input type="email" id="email" name="email" required style="width: 100%; padding: 8px;">
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <label for="password">New Password (leave blank to keep current)</label>
+                    <input type="password" id="password" name="password" style="width: 100%; padding: 8px;">
+                </div>
+                <button type="submit" class="update-btn">Save Changes</button>
+            </form>
+        </section>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('edit-vendor-form');
+            const vendorId = new URLSearchParams(window.location.search).get('id');
+
+            // Fetch and populate
+            fetch(`/api/admin/vendors/${vendorId}`)
+                .then(res => res.ok ? res.json() : Promise.reject('Failed to load vendor'))
+                .then(vendor => {
+                    if(vendor) {
+                        form.vendorId.value = vendor.id;
+                        form.name.value = vendor.name;
+                        form.email.value = vendor.email;
+                    }
+                }).catch(err => alert(err));
+
+            form.addEventListener('submit', e => {
+                e.preventDefault();
+                const data = {
+                    name: form.name.value,
+                    email: form.email.value,
+                };
+                if (form.password.value) {
+                    data.password = form.password.value;
+                }
+                fetch(`/api/admin/vendors/${vendorId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                }).then(res => {
+                    if (res.ok) {
+                        alert('Vendor updated successfully!');
+                        window.location.href = '/admin/vendors.html';
+                    } else {
+                        alert('Failed to update vendor.');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

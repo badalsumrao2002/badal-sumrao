@@ -105,3 +105,27 @@ footer {
 .footer-col h3 { color: var(--accent-yellow); }
 .footer-col a:hover { text-decoration: underline; }
 .copyright { text-align: center; margin-top: 2rem; }
+
+/* --- Admin Dashboard --- */
+.bookings-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+.bookings-table th, .bookings-table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+.bookings-table th {
+    background-color: var(--dark-gray);
+    color: var(--white);
+    font-weight: 500;
+}
+.bookings-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+.bookings-table tbody tr:hover {
+    background-color: #f1f1f1;
+}

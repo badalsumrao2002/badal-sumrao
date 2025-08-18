@@ -29,16 +29,43 @@
         <section class="hero-section">
             <div class="booking-form-container">
                 <h2>Book a Cab</h2>
-                <form id="booking-form">
-                    <select name="trip-type">
-                        <option value="one-way">One Way</option>
+                <form id="booking-form" action="/api/booking" method="POST">
+                    <select name="trip-type" required>
+                        <option value="">-- Select Trip Type --</option>
+                        <option value="one-way">One Way (Pick & Drop)</option>
                         <option value="round-trip">Round Trip</option>
+                        <option value="local-hourly">Local Trip (Hourly)</option>
+                        <option value="local-day">Local Trip (Day-based)</option>
+                        <option value="airport-drop">Airport Drop</option>
+                        <option value="airport-pickup">Airport Pick-up</option>
                     </select>
-                    <input type="text" name="pickup" placeholder="Pickup Location">
-                    <input type="text" name="drop" placeholder="Drop Location">
-                    <input type="date" name="date">
-                    <input type="time" name="time">
-                    <button type="submit">Send Message</button>
+                    <input type="text" name="pickup" placeholder="Pickup Location" required>
+                    <input type="text" name="drop" placeholder="Drop Location" required>
+                    <input type="date" name="date" required>
+                    <input type="time" name="time" required>
+                    <select name="vehicle-type" required>
+                        <option value="">-- Select Vehicle Type --</option>
+                        <option value="sedan">Sedan</option>
+                        <option value="suv">SUV</option>
+                        <option value="tempo">Tempo</option>
+                    </select>
+                    <input type="text" name="name" placeholder="Your Name" required>
+                    <input type="tel" name="mobile" placeholder="Mobile Number" required>
+                    <input type="email" name="email" placeholder="Email Address" required>
+
+                    <select name="payment-method" id="payment-method-select" required>
+                        <option value="">-- Select Payment Method --</option>
+                        <option value="pay-later">Pay Later</option>
+                        <option value="pay-qr">Pay Now with QR Code</option>
+                    </select>
+
+                    <div id="qr-code-container" style="display: none; text-align: center; background: white; padding: 1rem; border-radius: 5px;">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://example.com/pay" alt="Scan to Pay">
+                        <p style="color: #333;">Scan the QR code with your payment app.</p>
+                        <input type="text" name="transactionId" placeholder="Enter Transaction ID" style="margin-top: 1rem;">
+                    </div>
+
+                    <button type="submit">Book Now</button>
                 </form>
             </div>
         </section>
@@ -78,6 +105,23 @@
                 <button class="faq-question">How can I make the payment?</button>
                 <div class="faq-answer"><p>We accept UPI, Bank Transfer, and Debit/Credit Cards.</p></div>
             </div>
+        </section>
+
+        <section class="review-form-section" style="padding: 3rem 2rem; background-color: var(--white);">
+            <h2 style="text-align: center;">Leave a Review</h2>
+            <form id="review-form" style="max-width: 600px; margin: auto; display: flex; flex-direction: column; gap: 1rem;">
+                <input type="text" name="name" placeholder="Your Name" required>
+                <select name="rating" required>
+                    <option value="">-- Select Rating --</option>
+                    <option value="5">★★★★★ (Excellent)</option>
+                    <option value="4">★★★★☆ (Great)</option>
+                    <option value="3">★★★☆☆ (Good)</option>
+                    <option value="2">★★☆☆☆ (Fair)</option>
+                    <option value="1">★☆☆☆☆ (Poor)</option>
+                </select>
+                <textarea name="review" rows="4" placeholder="Write your review here..." required></textarea>
+                <button type="submit" style="background-color: var(--primary-black); color: var(--accent-yellow);">Submit Review</button>
+            </form>
         </section>
     </main>
 

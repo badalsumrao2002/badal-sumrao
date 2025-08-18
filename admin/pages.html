@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Pages - Admin</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <span>Home Car Rental - Admin Panel</span>
+        </div>
+        <nav>
+            <a href="/admin/dashboard.html">Bookings</a>
+            <a href="/admin/pages.html">Pages</a>
+            <a href="/admin/reviews.html">Reviews</a>
+            <a href="/admin/vendors.html">Vendors</a>
+            <a href="/api/admin/logout">Logout</a>
+        </nav>
+    </header>
+    <main>
+        <section style="padding: 2rem;">
+            <h1>Manage SEO Pages</h1>
+            <div id="pages-container">
+                <!-- Page list will be loaded here -->
+            </div>
+        </section>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const pagesContainer = document.getElementById('pages-container');
+
+            fetch('/api/admin/pages')
+                .then(response => response.json())
+                .then(pages => {
+                    if (pages.length === 0) {
+                        pagesContainer.innerHTML = '<p>No pages found in the database.</p>';
+                        return;
+                    }
+
+                    const table = document.createElement('table');
+                    table.className = 'bookings-table'; // Reusing the same style
+
+                    const thead = document.createElement('thead');
+                    thead.innerHTML = `
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Slug</th>
+                            <th>Action</th>
+                        </tr>
+                    `;
+                    table.appendChild(thead);
+
+                    const tbody = document.createElement('tbody');
+                    pages.forEach(page => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${page.id}</td>
+                            <td>${page.title}</td>
+                            <td>/pages/${page.slug}.html</td>
+                            <td><a href="/admin/edit-page.html?id=${page.id}" class="update-btn">Edit</a></td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                    table.appendChild(tbody);
+
+                    pagesContainer.appendChild(table);
+                })
+                .catch(error => {
+                    console.error('Error fetching pages:', error);
+                    pagesContainer.innerHTML = '<p>Error loading pages.</p>';
+                });
+        });
+    </script>
+</body>
+</html>

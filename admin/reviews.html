@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Reviews - Admin</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <span>Home Car Rental - Admin Panel</span>
+        </div>
+        <nav>
+            <a href="/admin/dashboard.html">Bookings</a>
+            <a href="/admin/pages.html">Pages</a>
+            <a href="/admin/reviews.html">Reviews</a>
+            <a href="/admin/vendors.html">Vendors</a>
+            <a href="/api/admin/logout">Logout</a>
+        </nav>
+    </header>
+    <main>
+        <section style="padding: 2rem;">
+            <h1>Manage Customer Reviews</h1>
+            <div id="reviews-container">
+                <!-- Review list will be loaded here -->
+            </div>
+        </section>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const reviewsContainer = document.getElementById('reviews-container');
+
+            function renderReviews(reviews) {
+                if (reviews.length === 0) {
+                    reviewsContainer.innerHTML = '<p>No reviews submitted yet.</p>';
+                    return;
+                }
+                const table = document.createElement('table');
+                table.className = 'bookings-table';
+                const thead = document.createElement('thead');
+                thead.innerHTML = `<tr><th>ID</th><th>Name</th><th>Rating</th><th>Review</th><th>Status</th><th>Actions</th></tr>`;
+                table.appendChild(thead);
+                const tbody = document.createElement('tbody');
+                reviews.forEach(review => {
+                    const tr = document.createElement('tr');
+                    tr.dataset.reviewId = review.id;
+                    tr.innerHTML = `
+                        <td>${review.id}</td>
+                        <td>${review.name}</td>
+                        <td>${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</td>
+                        <td><p style="max-width: 400px; white-space: pre-wrap;">${review.review}</p></td>
+                        <td class="status">${review.status}</td>
+                        <td>
+                            ${review.status === 'pending' ? `<button class="approve-btn" data-id="${review.id}">Approve</button>` : ''}
+                            <button class="delete-btn" data-id="${review.id}">Delete</button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+                table.appendChild(tbody);
+                reviewsContainer.innerHTML = '';
+                reviewsContainer.appendChild(table);
+            }
+
+            function fetchReviews() {
+                fetch('/api/admin/reviews').then(res => res.json()).then(renderReviews);
+            }
+
+            reviewsContainer.addEventListener('click', e => {
+                const id = e.target.dataset.id;
+                if (!id) return;
+
+                if (e.target.classList.contains('approve-btn')) {
+                    fetch(`/api/admin/reviews/${id}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ status: 'approved' })
+                    }).then(res => {
+                        if (res.ok) {
+                            const row = e.target.closest('tr');
+                            row.querySelector('.status').textContent = 'approved';
+                            e.target.remove(); // Remove approve button
+                        }
+                    });
+                } else if (e.target.classList.contains('delete-btn')) {
+                    if (confirm('Are you sure you want to delete this review?')) {
+                        fetch(`/api/admin/reviews/${id}`, { method: 'DELETE' }).then(res => {
+                            if (res.ok) e.target.closest('tr').remove();
+                        });
+                    }
+                }
+            });
+
+            fetchReviews();
+        });
+    </script>
+</body>
+</html>
