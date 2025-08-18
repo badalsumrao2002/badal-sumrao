@@ -1,2 +1,0 @@
-This is a placeholder file to ensure the 'images' directory is created.
-Logo and other image assets should be placed in this directory.
