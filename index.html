@@ -3,16 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MansiCab - Your Trusted Travel Partner</title>
+    <title>Home Car Rental - Your Trusted Travel Partner</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-
     <header>
         <div class="logo">
-            <img src="images/logo.jpg" alt="MansiCab Logo">
-            <span>MansiCab</span>
+            <img src="images/logo.jpg" alt="Home Car Rental Logo">
+            <span>Home Car Rental</span>
         </div>
         <nav>
             <a href="#">Home</a>
@@ -25,7 +23,6 @@
             <a href="register.html" class="login-btn" style="background-color: #337ab7;">Register</a>
         </div>
     </header>
-
     <main>
         <section class="hero-section">
             <h1>Hire cab for any kind of trip</h1>
@@ -36,7 +33,6 @@
                     <button class="tab-link" data-tab="local">LOCAL</button>
                     <button class="tab-link" data-tab="airport">AIRPORT</button>
                 </div>
-
                 <div id="oneway" class="tab-content active">
                     <form class="booking-form" action="/api/booking" method="POST">
                         <input type="text" name="pickup" placeholder="PICKUP LOCATION" required>
@@ -46,7 +42,6 @@
                         <button type="submit">Book Now</button>
                     </form>
                 </div>
-
                 <div id="roundtrip" class="tab-content">
                      <form class="booking-form" action="/api/booking" method="POST">
                         <input type="text" name="from" placeholder="FROM" required>
@@ -56,7 +51,6 @@
                         <button type="submit">Book Now</button>
                     </form>
                 </div>
-
                 <div id="local" class="tab-content">
                     <form class="booking-form" action="/api/booking" method="POST">
                         <input type="text" name="pickup" placeholder="PICKUP LOCATION" required>
@@ -66,7 +60,6 @@
                         <button type="submit">Book Now</button>
                     </form>
                 </div>
-
                 <div id="airport" class="tab-content">
                     <form class="booking-form" action="/api/booking" method="POST">
                         <input type="text" name="airport" placeholder="SELECT AIRPORT" required>
@@ -78,29 +71,16 @@
                 </div>
             </div>
         </section>
-
         <section id="packages" class="content-section">
             <h2>Best Packages for Your Journey</h2>
             <div class="placeholder"></div>
         </section>
-
-        <section id="offers" class="content-section">
-            <h2>Top Offers</h2>
-            <div class="placeholder"></div>
-        </section>
-
-        <section id="testimonials" class="content-section">
-            <h2>Our Testimonials</h2>
-            <div class="placeholder"></div>
-        </section>
     </main>
-
     <footer>
         <div class="footer-content">
-            <p>&copy; 2025 MansiCab Clone. All rights reserved.</p>
+            <p>&copy; 2025 Home Car Rental. All rights reserved.</p>
         </div>
     </footer>
-
     <script src="js/script.js"></script>
 </body>
 </html>
