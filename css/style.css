@@ -95,6 +95,11 @@ footer {
 
 /* --- Mobile Responsiveness --- */
 @media (max-width: 768px) {
+    header, .hero-section, .content-section {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
     header {
         flex-direction: column;
         gap: 1rem;
@@ -104,6 +109,24 @@ footer {
         flex-direction: column;
         align-items: center;
         gap: 10px;
+        width: 100%;
+        border-top: 1px solid #eee;
+        padding-top: 1rem;
+        margin-top: 1rem;
+    }
+
+    .hero-section h1 {
+        font-size: 1.8rem;
+    }
+
+    .booking-tabs {
+        flex-wrap: wrap; /* Allow tabs to wrap */
+    }
+
+    .tab-link {
+        flex-grow: 1; /* Allow tabs to take equal space */
+        font-size: 0.9rem;
+        padding: 12px 5px;
     }
 
     .booking-form {
@@ -113,5 +136,17 @@ footer {
     .booking-form input, .booking-form select, .booking-form button {
         width: 100%;
         box-sizing: border-box;
+    }
+
+    .header-auth {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .header-auth .login-btn {
+        flex-grow: 1;
+        text-align: center;
     }
 }
