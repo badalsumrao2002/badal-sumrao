@@ -1,15 +1,15 @@
 const http = require('http');
 const fs = require('fs');
-const path =require('path');
+const path = require('path');
 const crypto = require('crypto');
 const { URLSearchParams } = require('url');
 
 const port = 3000;
 const dbPath = path.join(__dirname, 'db.json');
 
-const mimeTypes = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript' };
+const mimeTypes = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.json': 'application/json' };
 
-// --- Helper Functions ---
+// --- HELPER FUNCTIONS ---
 function parseCookies(req) {
     const list = {};
     const cookieHeader = req.headers?.cookie;
@@ -30,7 +30,7 @@ function serveStatic(res, url) {
     const contentType = mimeTypes[extname] || 'application/octet-stream';
     fs.readFile(filePath, (error, content) => {
         if (error) {
-            res.writeHead(404).end('Not Found');
+            res.writeHead(404, { 'Content-Type': 'text/html' }).end('404 Not Found');
         } else {
             res.writeHead(200, { 'Content-Type': contentType }).end(content);
         }
@@ -44,76 +44,108 @@ function jsonResponse(res, statusCode, data) {
 
 function redirect(res, location, cookies = []) {
     const headers = { 'Location': location };
-    if (cookies.length > 0) {
-        headers['Set-Cookie'] = cookies;
-    }
+    if (cookies.length > 0) headers['Set-Cookie'] = cookies;
     res.writeHead(302, headers).end();
 }
 
+function handleApiRequest(req, res, user) {
+    const { method, url } = req;
+    const db = JSON.parse(fs.readFileSync(dbPath, 'utf8'));
 
-// --- Main Server ---
+    if (method === 'GET' && url === '/api/my-bookings') {
+        // In a real app, we would filter bookings by user.id
+        // For now, returning all bookings for demonstration
+        const userBookings = db.bookings.filter(b => b.customerId === user.id);
+        return jsonResponse(res, 200, userBookings);
+    }
+
+    // Fallback for other authenticated API routes
+    return jsonResponse(res, 404, { message: 'API endpoint not found' });
+}
+
+// --- MAIN SERVER LOGIC ---
 const server = http.createServer((req, res) => {
     const { method, url } = req;
-    const cookies = parseCookies(req);
 
     let body = '';
     req.on('data', chunk => { body += chunk.toString(); });
     req.on('end', () => {
         const db = JSON.parse(fs.readFileSync(dbPath, 'utf8'));
+        const cookies = parseCookies(req);
+        const session = db.sessions.find(s => s.sessionId === cookies.sessionId);
+        const currentUser = session ? { id: session.userId, role: session.role } : null;
 
-        // --- Public API Routes ---
-        if (method === 'POST' && url === '/api/register') {
-            const customer = new URLSearchParams(body);
-            if (db.customers.find(c => c.email === customer.get('email'))) {
-                return jsonResponse(res, 409, { message: 'Email already exists' });
+        // --- Handle POST requests (Login, Register, Booking) ---
+        if (method === 'POST') {
+            const params = new URLSearchParams(body);
+            switch (url) {
+                case '/api/login':
+                case '/api/vendor/login':
+                case '/api/admin/login':
+                    const userType = url.includes('admin') ? 'admin' : (url.includes('vendor') ? 'vendor' : 'customer');
+                    const identifier = userType === 'admin' ? 'username' : 'email';
+                    const users = db[userType + 's'];
+                    const userToLogin = users.find(u => u && u[identifier] === params.get(identifier) && u.password === params.get('password'));
+                    if (userToLogin) {
+                        const sessionId = crypto.randomBytes(16).toString('hex');
+                        db.sessions.push({ sessionId, userId: userToLogin.id, role: userType });
+                        fs.writeFileSync(dbPath, JSON.stringify(db, null, 2));
+                        const destination = userType === 'customer' ? '/profile.html' : `/${userType}/dashboard.html`;
+                        res.setHeader('Set-Cookie', `sessionId=${sessionId}; HttpOnly; Path=/`);
+                        return jsonResponse(res, 200, { success: true, redirectUrl: destination });
+                    }
+                    return jsonResponse(res, 401, { success: false, message: 'Invalid credentials' });
+
+                case '/api/register':
+                    const newCustomer = new URLSearchParams(body);
+                    const email = newCustomer.get('email');
+                    if (db.customers.find(c => c.email === email)) {
+                        return jsonResponse(res, 409, { message: 'Email already exists' });
+                    }
+                    const customerData = { id: Date.now(), name: newCustomer.get('name'), email: email, password: newCustomer.get('password') };
+                    db.customers.push(customerData);
+                    fs.writeFileSync(dbPath, JSON.stringify(db, null, 2));
+                    return jsonResponse(res, 201, { message: 'Registration successful! Please login.' });
+
+                case '/api/booking':
+                    const bookingData = {};
+                    for (const [key, value] of params.entries()) { bookingData[key] = value; }
+                    bookingData.id = Date.now();
+                    bookingData.status = 'Pending';
+                    if (currentUser) bookingData.customerId = currentUser.id;
+                    db.bookings.push(bookingData);
+                    fs.writeFileSync(dbPath, JSON.stringify(db, null, 2));
+                    return jsonResponse(res, 200, { message: 'Booking successful!' });
             }
-            db.customers.push({ id: Date.now(), name: customer.get('name'), email: customer.get('email'), password: customer.get('password')});
-            fs.writeFileSync(dbPath, JSON.stringify(db, null, 2));
-            return jsonResponse(res, 201, { message: 'Registration successful' });
-        }
-        if (method === 'POST' && url === '/api/login') {
-            const credentials = new URLSearchParams(body);
-            const customer = db.customers.find(c => c.email === credentials.get('email') && c.password === credentials.get('password'));
-            if (customer) {
-                const sessionId = crypto.randomBytes(16).toString('hex');
-                db.sessions.push({ sessionId, userId: customer.id, role: 'customer' });
-                fs.writeFileSync(dbPath, JSON.stringify(db, null, 2));
-                return redirect(res, '/profile.html', [`sessionId=${sessionId}; HttpOnly; Path=/`]);
-            }
-            return jsonResponse(res, 401, { message: 'Invalid credentials' });
-        }
-        if (method === 'POST' && url === '/api/booking') {
-            // ... (booking logic)
-            return jsonResponse(res, 200, { message: 'Booking received!' });
-        }
-        if (method === 'GET' && url === '/api/my-bookings') {
-            const session = db.sessions.find(s => s.sessionId === cookies.sessionId);
-            if (!session) return jsonResponse(res, 401, { message: 'Unauthorized' });
-            // In a real app, filter bookings by session.userId
-            return jsonResponse(res, 200, db.bookings);
         }
 
-        // --- Static File Serving ---
+        // --- Handle GET requests ---
         if (method === 'GET') {
-            const publicRoutes = ['/', '/index.html', '/register.html', '/login.html'];
-            if (publicRoutes.includes(url) || url.startsWith('/css/') || url.startsWith('/js/') || url.startsWith('/images/')) {
-                return serveStatic(res, url === '/' ? '/index.html' : url);
+            // Auth-protected routes
+            if (url.startsWith('/admin') || url.startsWith('/api/admin')) {
+                if (!currentUser || currentUser.role !== 'admin') return redirect(res, '/admin/login.html');
             }
-            // Protected routes below
-            const session = db.sessions.find(s => s.sessionId === cookies.sessionId);
-            if (session) {
-                if (url === '/profile.html') {
-                    return serveStatic(res, url);
-                }
+            if (url.startsWith('/vendor') || url.startsWith('/api/vendor')) {
+                 if (!currentUser || currentUser.role !== 'vendor') return redirect(res, '/vendor/login.html');
             }
-            return redirect(res, '/login.html');
+            if (url.startsWith('/profile') || url.startsWith('/api/my-bookings')) {
+                 if (!currentUser || currentUser.role !== 'customer') return redirect(res, '/login.html');
+            }
+
+            // API router for GET requests
+            if (url.startsWith('/api/')) {
+                return handleApiRequest(req, res, currentUser);
+            }
+
+            // Static file serving
+            return serveStatic(res, url === '/' ? '/index.html' : url);
         }
 
-        // Fallback for unhandled routes
-        res.writeHead(404).end();
+        // Fallback for other methods
+        res.writeHead(405).end();
     });
 });
 
 server.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+    console.log(`Server is running on http://localhost:${port}`);
 });

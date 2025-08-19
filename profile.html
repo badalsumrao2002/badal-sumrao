@@ -17,38 +17,43 @@
             <a href="/api/logout">Logout</a>
         </nav>
     </header>
-    <main>
-        <section style="padding: 2rem;">
-            <h1>Welcome, Customer!</h1>
-            <h2>My Bookings</h2>
-            <div id="my-bookings-container">
-                <!-- Bookings will be loaded here -->
-            </div>
-        </section>
+    <main class="content-section">
+        <h1>Welcome, Customer!</h1>
+        <h2>My Bookings</h2>
+        <div id="my-bookings-container">
+            <p>Loading your bookings...</p>
+        </div>
     </main>
+    <footer>
+        <p>&copy; 2025 Home Car Rental. All Rights Reserved.</p>
+    </footer>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const bookingsContainer = document.getElementById('my-bookings-container');
             fetch('/api/my-bookings')
                 .then(res => {
-                    if (!res.ok) window.location.href = '/login.html';
+                    if (!res.ok) {
+                        // If not authorized, the server should have already redirected.
+                        // This handles other errors.
+                        throw new Error('Could not fetch bookings.');
+                    }
                     return res.json();
                 })
                 .then(bookings => {
                     if (!bookings || bookings.length === 0) {
-                        bookingsContainer.innerHTML = '<p>You have no bookings.</p>';
+                        bookingsContainer.innerHTML = '<p>You have no bookings yet.</p>';
                         return;
                     }
                     let html = '<ul>';
                     bookings.forEach(b => {
-                        html += `<li>${b.date}: ${b.pickup || b.from} to ${b.drop || b.to} - <strong>Status: ${b.status}</strong></li>`;
+                        html += `<li>Booking on <strong>${b.date}</strong> - Status: <strong>${b.status}</strong></li>`;
                     });
                     html += '</ul>';
                     bookingsContainer.innerHTML = html;
                 })
                 .catch(err => {
                     console.error(err);
-                    bookingsContainer.innerHTML = '<p>Could not load bookings.</p>';
+                    bookingsContainer.innerHTML = `<p style="color: red;">${err.message}</p>`;
                 });
         });
     </script>

@@ -1,152 +1,79 @@
+/* Styles for Home Car Rental */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     background-color: #f4f4f4;
+    color: #333;
 }
 
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
+    padding: 1rem 5%;
     background-color: #fff;
-    border-bottom: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.logo { display: flex; align-items: center; gap: 10px; font-weight: bold; }
-.logo img { height: 80px; }
-
-header nav a { margin: 0 15px; text-decoration: none; color: #333; }
-.login-btn { background-color: #f0ad4e; color: white; padding: 10px 20px; border-radius: 5px; }
+.logo img { height: 50px; }
+header nav { display: flex; gap: 2rem; }
+header nav a { text-decoration: none; color: #333; font-weight: bold; }
+.header-phone a { font-weight: bold; color: #007bff; text-decoration: none; }
 
 .hero-section {
+    background: #e9ecef;
     padding: 4rem 2rem;
     text-align: center;
-    background: #333;
-    color: white;
 }
 
+.hero-section h1 { margin-top: 0; }
+
 .booking-container {
-    max-width: 800px;
+    max-width: 900px;
     margin: 2rem auto;
-    background: white;
-    padding: 1rem;
+    background: #fff;
     border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
 .booking-tabs {
     display: flex;
-    border-bottom: 1px solid #ddd;
 }
 
 .tab-link {
-    padding: 15px 20px;
+    padding: 1rem;
+    flex-grow: 1;
+    text-align: center;
     cursor: pointer;
     border: none;
-    background-color: transparent;
+    background-color: #f8f9fa;
     font-size: 1rem;
+    font-weight: bold;
+    border-bottom: 3px solid transparent;
 }
 
 .tab-link.active {
-    border-bottom: 3px solid #f0ad4e;
-    font-weight: bold;
+    background-color: #fff;
+    border-bottom-color: #007bff;
 }
 
-.tab-content {
-    display: none;
-    padding: 2rem;
-}
+.tab-content { display: none; padding: 2rem; }
+.tab-content.active { display: block; }
 
-.tab-content.active {
-    display: block;
-}
-
-.booking-form {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-}
-
+.booking-form { display: flex; gap: 1rem; align-items: flex-end; }
 .booking-form input, .booking-form select, .booking-form button {
-    padding: 10px;
+    padding: 0.8rem;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 1rem;
+    flex-grow: 1;
 }
-
 .booking-form button {
-    background-color: #5cb85c;
+    background-color: #28a745;
     color: white;
     cursor: pointer;
+    flex-grow: 0;
 }
 
-.content-section {
-    padding: 3rem 2rem;
-    text-align: center;
-}
-
-footer {
-    background: #333;
-    color: white;
-    text-align: center;
-    padding: 1rem;
-    margin-top: 2rem;
-}
-
-/* --- Mobile Responsiveness --- */
-@media (max-width: 768px) {
-    header, .hero-section, .content-section {
-        padding-left: 1rem;
-        padding-right: 1rem;
-    }
-
-    header {
-        flex-direction: column;
-        gap: 1rem;
-    }
-
-    header nav {
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-        width: 100%;
-        border-top: 1px solid #eee;
-        padding-top: 1rem;
-        margin-top: 1rem;
-    }
-
-    .hero-section h1 {
-        font-size: 1.8rem;
-    }
-
-    .booking-tabs {
-        flex-wrap: wrap; /* Allow tabs to wrap */
-    }
-
-    .tab-link {
-        flex-grow: 1; /* Allow tabs to take equal space */
-        font-size: 0.9rem;
-        padding: 12px 5px;
-    }
-
-    .booking-form {
-        flex-direction: column;
-    }
-
-    .booking-form input, .booking-form select, .booking-form button {
-        width: 100%;
-        box-sizing: border-box;
-    }
-
-    .header-auth {
-        display: flex;
-        width: 100%;
-        justify-content: center;
-        gap: 1rem;
-    }
-
-    .header-auth .login-btn {
-        flex-grow: 1;
-        text-align: center;
-    }
-}
+.content-section { padding: 3rem 5%; }
+footer { background: #343a40; color: white; text-align: center; padding: 2rem; margin-top: 2rem; }

@@ -1,5 +1,16 @@
 {
-    "bookings": [],
+    "users": [
+        {
+            "id": 1,
+            "username": "homecarrental.com",
+            "password": "homecar@30042000270324",
+            "role": "admin"
+        }
+    ],
+    "vendors": [],
     "customers": [],
+    "bookings": [],
+    "pages": [],
+    "reviews": [],
     "sessions": []
 }

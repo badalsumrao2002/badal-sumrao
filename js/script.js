@@ -11,7 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
             // Activate the clicked tab and its content
             const target = document.getElementById(tab.dataset.tab);
             tab.classList.add('active');
-            target.classList.add('active');
+            if (target) {
+                target.classList.add('active');
+            }
         });
     });
 
