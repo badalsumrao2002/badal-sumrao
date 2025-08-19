@@ -13,30 +13,44 @@
         </div>
         <nav>
             <a href="/">Home</a>
-            <a href="#">About Us</a>
-            <a href="services.html">Services</a>
-            <a href="#">Contact</a>
+            <a href="/services.html">Services</a>
         </nav>
-        <div class="header-auth">
-             <a href="login.html" class="login-btn">Login</a>
-            <a href="register.html" class="login-btn" style="background-color: #337ab7;">Register</a>
-        </div>
     </header>
-    <main>
-        <section style="padding: 4rem 2rem; text-align: center;">
-            <h2>Create Your Account</h2>
-            <form id="register-form" action="/api/register" method="POST" style="max-width: 400px; margin: auto; display: flex; flex-direction: column; gap: 1rem;">
-                <input type="text" name="name" placeholder="Your Name" required>
-                <input type="email" name="email" placeholder="Your Email" required>
-                <input type="password" name="password" placeholder="Create Password" required>
-                <button type="submit" class="update-btn">Register</button>
-            </form>
-        </section>
+    <main class="content-section">
+        <h2>Create Your Account</h2>
+        <form id="register-form" style="max-width: 400px; margin: auto; display: flex; flex-direction: column; gap: 1rem;">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <input type="password" name="password" placeholder="Create Password" required>
+            <button type="submit" class="booking-form-button">Register</button>
+            <p>Already have an account? <a href="/login.html">Login here</a>.</p>
+        </form>
     </main>
     <footer>
-        <div class="footer-content">
-            <p>&copy; 2025 Home Car Rental. All rights reserved.</p>
-        </div>
+        <p>&copy; 2025 Home Car Rental. All Rights Reserved.</p>
     </footer>
+    <script>
+        document.getElementById('register-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            const data = new URLSearchParams(formData);
+
+            fetch('/api/register', {
+                method: 'POST',
+                body: data
+            })
+            .then(res => res.json())
+            .then(result => {
+                alert(result.message);
+                if (result.message.includes('successful')) {
+                    window.location.href = '/login.html';
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert('An error occurred during registration.');
+            });
+        });
+    </script>
 </body>
 </html>
